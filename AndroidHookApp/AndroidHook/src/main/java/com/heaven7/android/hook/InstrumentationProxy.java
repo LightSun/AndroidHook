@@ -5,13 +5,6 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.Bundle;
-import android.os.IBinder;
-import android.text.TextUtils;
-
-import java.lang.reflect.Method;
-import java.util.List;
 
 /**
  * Created by heaven7 on 2019/6/10.
@@ -21,9 +14,9 @@ public class InstrumentationProxy extends Instrumentation {
     private Instrumentation mInstrumentation;
     private PackageManager mPackageManager;
 
-    public InstrumentationProxy(Instrumentation instrumentation, PackageManager packageManager) {
+    public InstrumentationProxy(Context context, Instrumentation instrumentation) {
         mInstrumentation = instrumentation;
-        mPackageManager = packageManager;
+        mPackageManager = context.getPackageManager();
     }
     /*public ActivityResult execStartActivity(
             Context who, IBinder contextThread, IBinder token, Activity target,
@@ -50,8 +43,9 @@ public class InstrumentationProxy extends Instrumentation {
 
         if(type == HookCons.TYPE_REPLACE_ACTIVITY){
             Intent src = intent.getParcelableExtra(HookCons.KEY_SRC_INTENT);
-            return super.newActivity(cl, src.getComponent().getClassName(), intent);
+            return (Activity) cl.loadClass(src.getComponent().getClassName()).newInstance();
         }
-        return super.newActivity(cl, className, intent);
+        return mInstrumentation.newActivity(cl, className, intent);
     }
+
 }

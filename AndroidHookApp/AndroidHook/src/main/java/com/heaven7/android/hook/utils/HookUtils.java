@@ -7,7 +7,7 @@ import android.content.Intent;
  */
 public final class HookUtils {
 
-    public static Intent getIntent(Object[] args){
+    public static Intent getIntent(Object[] args, int[] arr_index){
         Intent intent;
         int index = -1;
         for (int i = 0; i < args.length; i++) {
@@ -18,6 +18,9 @@ public final class HookUtils {
         }
         if(index < 0){
             throw new AndroidHookException("can't find intent for startActivity.");
+        }
+        if(arr_index != null){
+            arr_index[0] = index;
         }
         return (Intent) args[index];
     }

@@ -5,7 +5,9 @@ import android.content.Intent;
 
 import com.heaven7.android.hook.HookCallback;
 import com.heaven7.android.hook.HookCons;
+import com.heaven7.android.hook.item.StartActivityItem;
 import com.heaven7.android.hook.utils.AndroidHookException;
+import com.heaven7.android.hook.utils.HookUtils;
 import com.heaven7.java.base.util.Predicates;
 import com.heaven7.java.base.util.ReflectUtils;
 
@@ -18,9 +20,9 @@ import java.util.List;
  */
 public class StartActivityAMSHookCallback implements HookCallback {
 
-    private final List<HookItem> mItems;
+    private final List<StartActivityItem> mItems;
 
-    public StartActivityAMSHookCallback(HookItem...items) {
+    public StartActivityAMSHookCallback(StartActivityItem...items) {
         this.mItems = Arrays.asList(items);
     }
 
@@ -44,9 +46,9 @@ public class StartActivityAMSHookCallback implements HookCallback {
         }
         intent = (Intent) args[index];
         ComponentName component = intent.getComponent();
-        //find item
-        HookItem targetItem = null;
-        for (HookItem item : mItems){
+        //find item.
+        StartActivityItem targetItem = null;
+        for (StartActivityItem item : mItems){
             if(component.equals(item.focus)){
                 targetItem = item;
                 break;
@@ -67,16 +69,6 @@ public class StartActivityAMSHookCallback implements HookCallback {
             return method.invoke(dst, args);
         } catch (Exception e) {
             throw new ReflectUtils.ReflectException(e);
-        }
-    }
-
-    public static class HookItem{
-        final ComponentName focus;
-        final Intent targetIntent;
-
-        public HookItem(ComponentName focus, Intent target) {
-            this.focus = focus;
-            this.targetIntent = target;
         }
     }
 }

@@ -1,7 +1,5 @@
 package com.heaven7.android.hook;
 
-import android.content.Intent;
-
 import com.heaven7.java.base.util.Predicates;
 
 import java.lang.reflect.InvocationHandler;
