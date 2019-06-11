@@ -4,7 +4,7 @@ import com.heaven7.java.base.util.ReflectUtils;
 
 import java.lang.reflect.Method;
 
-public interface HookCallback {
+public interface ProxyHookCallback {
 
     boolean shouldHook(Object src, Method method, Object[] args);
 

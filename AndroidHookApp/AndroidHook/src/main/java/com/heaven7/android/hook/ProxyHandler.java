@@ -13,16 +13,16 @@ import java.util.List;
 public class ProxyHandler implements InvocationHandler {
 
     private final Object mDst;
-    private final List<HookCallback> mHooks;
+    private final List<ProxyHookCallback> mHooks;
 
-    public ProxyHandler(Object dst, HookCallback...callbacks) {
+    public ProxyHandler(Object dst, ProxyHookCallback...callbacks) {
         this.mDst = dst;
         this.mHooks = Arrays.asList(callbacks);
     }
     @Override
     public Object invoke(Object src, Method method, Object[] args) throws Throwable {
         if(!Predicates.isEmpty(mHooks)){
-            for (HookCallback callback : mHooks){
+            for (ProxyHookCallback callback : mHooks){
                 if(callback.shouldHook(src, method, args)){
                    return callback.invokeHook(src, mDst, method, args);
                 }

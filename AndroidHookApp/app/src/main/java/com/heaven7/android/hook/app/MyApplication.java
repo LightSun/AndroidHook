@@ -1,9 +1,7 @@
 package com.heaven7.android.hook.app;
 
 import android.app.Application;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 
 import com.heaven7.android.hook.Hooks;
 import com.heaven7.android.hook.item.StartActivityItem;
@@ -17,8 +15,6 @@ public class MyApplication extends Application {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 
-        Hooks.ofStartActivity(base, new StartActivityItem(
-                new ComponentName(this, MainActivity3.class), new Intent(base, MainActivity2.class)
-                ));
+        Hooks.ofStartActivity(base, StartActivityItem.of(this, MainActivity3.class, MainActivity2.class));
     }
 }

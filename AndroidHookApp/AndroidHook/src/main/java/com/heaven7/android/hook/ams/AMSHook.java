@@ -1,38 +1,39 @@
-package com.heaven7.android.hook;
+package com.heaven7.android.hook.ams;
 
+import android.content.Context;
 import android.os.Build;
 
+import com.heaven7.android.hook.DynamicProxyFactory;
 import com.heaven7.java.base.util.ReflectUtils;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**
  * Created by heaven7 on 2019/6/10.
  */
-public abstract class AMSHook {
+public final class AMSHook {
 
-    public static Object hookAMS(Callback callback) throws ReflectUtils.ReflectException {
-        AMSHookDelegate delegate;
+    private static final AMSHookDelegate sDelegate;
+
+    static {
         if (Build.VERSION.SDK_INT >= 26) {
-            delegate = new HookAMS26();
+            sDelegate = new HookAMS26();
         } else {
-            delegate = new HookAMSBase();
+            sDelegate = new HookAMSBase();
         }
-        return delegate.hookAMS(callback);
     }
 
-    public interface Callback {
-        InvocationHandler createAMSProxy(Object iam);
+    public static Object hookAMS(Context context, DynamicProxyFactory callback) throws ReflectUtils.ReflectException {
+        return sDelegate.hookAMS(context, callback);
     }
 
     private interface AMSHookDelegate {
-        Object hookAMS(Callback callback) throws ReflectUtils.ReflectException;
+        Object hookAMS(Context context, DynamicProxyFactory callback) throws ReflectUtils.ReflectException;
     }
 
     private static class HookAMSBase implements AMSHookDelegate {
         @Override
-        public Object hookAMS(Callback callback) throws ReflectUtils.ReflectException {
+        public Object hookAMS(Context context,DynamicProxyFactory callback) throws ReflectUtils.ReflectException {
             try {
                 Object defaultSingleton = null;
                 Class<?> activityManagerNativeClazz = Class.forName("android.app.ActivityManagerNative");
@@ -42,7 +43,7 @@ public abstract class AMSHook {
                 Object iActivityManager = ReflectUtils.getVirtualFieldValue(defaultSingleton, "mInstance");
 
                 Object proxy = Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-                        new Class<?>[]{iActivityManagerClazz}, callback.createAMSProxy(iActivityManager));
+                        new Class<?>[]{iActivityManagerClazz}, callback.createProxy(context, iActivityManager));
                 ReflectUtils.setVirtualFieldValue("mInstance", proxy, defaultSingleton);
                 return proxy;
             } catch (ClassNotFoundException e) {
@@ -53,7 +54,7 @@ public abstract class AMSHook {
 
     private static class HookAMS26 implements AMSHookDelegate {
         @Override
-        public Object hookAMS(Callback callback) throws ReflectUtils.ReflectException {
+        public Object hookAMS(Context context,DynamicProxyFactory callback) throws ReflectUtils.ReflectException {
             try {
                 Object defaultSingleton = null;
 
@@ -64,7 +65,7 @@ public abstract class AMSHook {
                 Object iActivityManager = ReflectUtils.getVirtualFieldValue(defaultSingleton, "mInstance");
 
                 Object proxy = Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-                        new Class<?>[]{iActivityManagerClazz}, callback.createAMSProxy(iActivityManager));
+                        new Class<?>[]{iActivityManagerClazz}, callback.createProxy(context,iActivityManager));
                 ReflectUtils.setVirtualFieldValue("mInstance", proxy, defaultSingleton);
                 return proxy;
             } catch (ClassNotFoundException e) {

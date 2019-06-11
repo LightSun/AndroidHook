@@ -1,8 +1,9 @@
-package com.heaven7.android.hook;
+package com.heaven7.android.hook.instrumentation;
 
 import android.app.Instrumentation;
 import android.content.Context;
 
+import com.heaven7.android.hook.StaticProxyFactory;
 import com.heaven7.java.base.util.ReflectUtils;
 
 /**
@@ -10,17 +11,14 @@ import com.heaven7.java.base.util.ReflectUtils;
  */
 public final class InstrumentationHook {
 
-    public static void hookInstrumentation(Context context, Callback callback){
+    public static Instrumentation hookInstrumentation(Context context, StaticProxyFactory<Instrumentation> callback) {
         //Class<?> contextImplClass = Class.forName("android.app.ContextImpl");
         //Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");
         Object activityThread = ReflectUtils.getVirtualFieldValue(context, "mMainThread");
         Object instrumentation = ReflectUtils.getVirtualFieldValue(activityThread, "mInstrumentation");
+        Instrumentation target = callback.createProxy(context, (Instrumentation) instrumentation);
         ReflectUtils.setVirtualFieldValue("mInstrumentation",
-                callback.createInstrumentationProxy(context, instrumentation),
-                activityThread);
-    }
-
-    public interface Callback {
-        Instrumentation createInstrumentationProxy(Context context,Object src);
+                target, activityThread);
+        return target;
     }
 }
