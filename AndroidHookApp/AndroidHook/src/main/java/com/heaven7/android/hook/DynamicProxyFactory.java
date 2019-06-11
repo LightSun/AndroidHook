@@ -14,7 +14,7 @@ public interface DynamicProxyFactory {
      * create proxy for target object.
      * @param context the context
      * @param src the object to proxy
-     * @return
+     * @return the invocation handler
      */
     InvocationHandler createProxy(Context context, Object src);
 }

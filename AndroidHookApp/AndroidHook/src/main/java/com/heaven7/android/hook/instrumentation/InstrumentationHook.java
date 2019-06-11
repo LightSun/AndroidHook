@@ -11,6 +11,12 @@ import com.heaven7.java.base.util.ReflectUtils;
  */
 public final class InstrumentationHook {
 
+    /**
+     * hook instrumentation
+     * @param context the context
+     * @param callback the factory
+     * @return the new Instrumentation
+     */
     public static Instrumentation hookInstrumentation(Context context, StaticProxyFactory<Instrumentation> callback) {
         //Class<?> contextImplClass = Class.forName("android.app.ContextImpl");
         //Class<?> activityThreadClass = Class.forName("android.app.ActivityThread");

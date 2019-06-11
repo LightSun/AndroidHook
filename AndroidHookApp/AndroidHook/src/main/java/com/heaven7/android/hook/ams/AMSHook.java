@@ -23,6 +23,13 @@ public final class AMSHook {
         }
     }
 
+    /**
+     * hook AMS
+     * @param context the context
+     * @param callback the dynamic proxy factory
+     * @return the hooked 'AMS'.
+     * @throws ReflectUtils.ReflectException if occurs
+     */
     public static Object hookAMS(Context context, DynamicProxyFactory callback) throws ReflectUtils.ReflectException {
         return sDelegate.hookAMS(context, callback);
     }
