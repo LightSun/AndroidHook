@@ -7,6 +7,7 @@ import com.heaven7.android.hook.HookCons;
 import com.heaven7.android.hook.ProxyHookCallback;
 import com.heaven7.android.hook.item.StartActivityItem;
 import com.heaven7.android.hook.utils.HookUtils;
+import com.heaven7.java.base.anno.Nullable;
 import com.heaven7.java.base.util.Predicates;
 import com.heaven7.java.base.util.ReflectUtils;
 
@@ -19,9 +20,16 @@ import java.util.List;
  */
 public class StartActivityAMSHookCallback implements ProxyHookCallback {
 
+    private final StartActivityItem mPackageItem;
     private final List<StartActivityItem> mItems;
 
-    public StartActivityAMSHookCallback(StartActivityItem...items) {
+    /**
+     * create StartActivity hook callback for target arguments
+     * @param pkgItem the package item which focus on package.
+     * @param items the items which focus on specific class.
+     */
+    public StartActivityAMSHookCallback(@Nullable StartActivityItem pkgItem, StartActivityItem...items) {
+        this.mPackageItem = pkgItem;
         this.mItems = Arrays.asList(items);
     }
 
@@ -36,7 +44,7 @@ public class StartActivityAMSHookCallback implements ProxyHookCallback {
         Intent intent = HookUtils.getIntent(args, index_arr);
         if(intent != null){
             int index = index_arr[0];
-            //find item.
+            //find matched item.
             StartActivityItem targetItem = null;
             ComponentName component = intent.getComponent();
             if(component != null){
@@ -46,22 +54,27 @@ public class StartActivityAMSHookCallback implements ProxyHookCallback {
                         break;
                     }
                 }
-            }
-            // find. replace pkg. and put extra . replace intent args.
-            if(targetItem != null){
-                // find. replace pkg. and put extra . replace intent args.
-                Intent target = new Intent();
-                //set new component (registered in xml)for platform verify
-                target.setComponent(new ComponentName(component.getPackageName(), targetItem.target.getClassName()));
-                target.putExtra(HookCons.KEY_SRC_INTENT, intent);
-                target.putExtra(HookCons.KEY_TYPE, HookCons.TYPE_REPLACE_ACTIVITY);
-                //the extras should be move to target intent
-                if(intent.getExtras() != null){
-                    target.putExtras(intent.getExtras());
-                    //intent.getExtras().clear();
+                //specific can't find and has focus package
+                if(targetItem == null && mPackageItem != null && mPackageItem.focusPackage != null
+                        && component.getClassName().startsWith(mPackageItem.focusPackage)){
+                    targetItem = mPackageItem;
                 }
-                //set intent.
-                args[index] = target;
+                // find. replace pkg. and put extra . replace intent args.
+                if(targetItem != null){
+                    // find. replace pkg. and put extra . replace intent args.
+                    Intent target = new Intent();
+                    //set new component (registered in xml)for platform verify
+                    target.setComponent(new ComponentName(component.getPackageName(), targetItem.target.getClassName()));
+                    target.putExtra(HookCons.KEY_SRC_INTENT, intent);
+                    target.putExtra(HookCons.KEY_TYPE, HookCons.TYPE_REPLACE_ACTIVITY);
+                    //the extras should be move to target intent
+                    if(intent.getExtras() != null){
+                        target.putExtras(intent.getExtras());
+                        //intent.getExtras().clear();
+                    }
+                    //set intent.
+                    args[index] = target;
+                }
             }
         }
         try {

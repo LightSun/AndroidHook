@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     // Example of a call to a native method
-    TextView tv = (TextView) findViewById(R.id.sample_text);
-    tv.setText(stringFromJNI());
+    TextView tv = (TextView) findViewById(R.id.tv1);
+    //tv.setText(stringFromJNI());
     }
 
     /**
@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity {
     public void startActivity3(View view) {
         Intent intent = new Intent(this, MainActivity3.class);
         intent.putExtra("MainActivity", "_123_");
+        startActivity(intent);
+    }
+    public void startActivity4(View view) {
+        Intent intent = new Intent(this, MainActivity4.class);
+        intent.putExtra("MainActivity", "_1234_");
         startActivity(intent);
     }
 }

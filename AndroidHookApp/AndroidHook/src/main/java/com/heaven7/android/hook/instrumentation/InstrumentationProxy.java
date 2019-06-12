@@ -13,11 +13,13 @@ import com.heaven7.android.hook.utils.HookUtils;
  */
 public class InstrumentationProxy extends Instrumentation{
 
-   /* private Instrumentation mInstrumentation;
-    private PackageManager mPackageManager;*/
+    private Instrumentation mInstrumentation;
+   // private PackageManager mPackageManager;
 
     public InstrumentationProxy(Context context, Instrumentation instrumentation) {
+        this.mInstrumentation = instrumentation;
         HookUtils.copyFieldValue(instrumentation, this);
+        System.out.println(instrumentation);
     }
 
     @Override
@@ -27,8 +29,8 @@ public class InstrumentationProxy extends Instrumentation{
 
         if (type == HookCons.TYPE_REPLACE_ACTIVITY) {
             Intent src = intent.getParcelableExtra(HookCons.KEY_SRC_INTENT);
-            return super.newActivity(cl, src.getComponent().getClassName(), intent);
+            return mInstrumentation.newActivity(cl, src.getComponent().getClassName(), intent);
         }
-        return super.newActivity(cl, className, intent);
+        return mInstrumentation.newActivity(cl, className, intent);
     }
 }
