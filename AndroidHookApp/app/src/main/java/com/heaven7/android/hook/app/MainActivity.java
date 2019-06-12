@@ -1,10 +1,13 @@
 package com.heaven7.android.hook.app;
 
+import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import com.heaven7.android.hook.utils.HookUtils;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,9 +16,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    // Example of a call to a native method
-    TextView tv = (TextView) findViewById(R.id.tv1);
-    //tv.setText(stringFromJNI());
+        // Example of a call to a native method
+        TextView tv = (TextView) findViewById(R.id.tv1);
+        //tv.setText(stringFromJNI());
+        HookUtils.printMethods(Instrumentation.class);
     }
 
     /**
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("MainActivity", "_123_");
         startActivity(intent);
     }
+
     public void startActivity4(View view) {
         Intent intent = new Intent(this, MainActivity4.class);
         intent.putExtra("MainActivity", "_1234_");

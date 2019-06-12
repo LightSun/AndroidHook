@@ -1,8 +1,10 @@
 package com.heaven7.android.hook.utils;
 
 import android.content.Intent;
+import android.util.Log;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
@@ -31,6 +33,22 @@ public final class HookUtils {
             arr_index[0] = index;
         }
         return (Intent) args[index];
+    }
+    public static void printMethods(Class<?> clazz){
+        Method[] methods = clazz.getDeclaredMethods();
+        StringBuilder sb = new StringBuilder();
+        for (Method  m : methods){
+            if(Modifier.isStatic(m.getModifiers())){
+                continue;
+            }
+            if(Modifier.isPrivate(m.getModifiers())){
+                continue;
+            }
+            sb.append(m.toGenericString()).append("\n");
+            System.out.println(m.toGenericString());
+        }
+        String str = sb.toString().replaceAll("\\$", ".");
+        Log.i("printMethods", "\r\n: " + str);
     }
 
     public static void copyFieldValue(Object src, Object dst) {

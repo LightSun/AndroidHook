@@ -11,6 +11,7 @@ import com.heaven7.android.hook.utils.HookUtils;
 /**
  * Created by heaven7 on 2019/6/10.
  */
+//TODO wait fix all methods for Instrumentation. (static proxy)
 public class InstrumentationProxy extends Instrumentation{
 
     private Instrumentation mInstrumentation;
@@ -18,8 +19,7 @@ public class InstrumentationProxy extends Instrumentation{
 
     public InstrumentationProxy(Context context, Instrumentation instrumentation) {
         this.mInstrumentation = instrumentation;
-        HookUtils.copyFieldValue(instrumentation, this);
-        System.out.println(instrumentation);
+        //HookUtils.copyFieldValue(instrumentation, this);
     }
 
     @Override
