@@ -1,0 +1,94 @@
+public android.os.TestLooperManager android.app.Instrumentation.acquireLooperManager(android.os.Looper)
+
+public android.app.Instrumentation$ActivityMonitor android.app.Instrumentation.addMonitor(android.content.IntentFilter,android.app.Instrumentation$ActivityResult,boolean)
+
+public android.app.Instrumentation$ActivityMonitor android.app.Instrumentation.addMonitor(java.lang.String,android.app.Instrumentation$ActivityResult,boolean)
+
+public void android.app.Instrumentation.addMonitor(android.app.Instrumentation$ActivityMonitor)
+
+public void android.app.Instrumentation.addResults(android.os.Bundle)
+
+public void android.app.Instrumentation.callActivityOnCreate(android.app.Activity,android.os.Bundle)
+public void android.app.Instrumentation.callActivityOnCreate(android.app.Activity,android.os.Bundle,android.os.PersistableBundle)
+public void android.app.Instrumentation.callActivityOnDestroy(android.app.Activity)
+public void android.app.Instrumentation.callActivityOnNewIntent(android.app.Activity,android.content.Intent)
+public void android.app.Instrumentation.callActivityOnNewIntent(android.app.Activity,com.android.internal.content.ReferrerIntent)
+public void android.app.Instrumentation.callActivityOnPause(android.app.Activity)
+public void android.app.Instrumentation.callActivityOnPostCreate(android.app.Activity,android.os.Bundle)
+public void android.app.Instrumentation.callActivityOnPostCreate(android.app.Activity,android.os.Bundle,android.os.PersistableBundle)
+public void android.app.Instrumentation.callActivityOnRestart(android.app.Activity)
+public void android.app.Instrumentation.callActivityOnRestoreInstanceState(android.app.Activity,android.os.Bundle)
+public void android.app.Instrumentation.callActivityOnRestoreInstanceState(android.app.Activity,android.os.Bundle,android.os.PersistableBundle)
+public void android.app.Instrumentation.callActivityOnResume(android.app.Activity)
+public void android.app.Instrumentation.callActivityOnSaveInstanceState(android.app.Activity,android.os.Bundle)
+
+public void android.app.Instrumentation.callActivityOnSaveInstanceState(android.app.Activity,android.os.Bundle,android.os.PersistableBundle)
+public void android.app.Instrumentation.callActivityOnStart(android.app.Activity)
+public void android.app.Instrumentation.callActivityOnStop(android.app.Activity)
+public void android.app.Instrumentation.callActivityOnUserLeaving(android.app.Activity)
+public void android.app.Instrumentation.callApplicationOnCreate(android.app.Application)
+
+public boolean android.app.Instrumentation.checkMonitorHit(android.app.Instrumentation$ActivityMonitor,int)
+public void android.app.Instrumentation.endPerformanceSnapshot()
+public void android.app.Instrumentation.execStartActivities(android.content.Context,android.os.IBinder,android.os.IBinder,android.app.Activity,android.content.Intent[],android.os.Bundle)
+
+public int android.app.Instrumentation.execStartActivitiesAsUser(android.content.Context,android.os.IBinder,android.os.IBinder,android.app.Activity,android.content.Intent[],android.os.Bundle,int)
+
+public android.app.Instrumentation$ActivityResult android.app.Instrumentation.execStartActivity(android.content.Context,android.os.IBinder,android.os.IBinder,android.app.Activity,android.content.Intent,int,android.os.Bundle)
+
+public android.app.Instrumentation$ActivityResult android.app.Instrumentation.execStartActivity
+(android.content.Context,android.os.IBinder,android.os.IBinder,java.lang.String,android.content.Intent,int,android.os.Bundle)
+
+public android.app.Instrumentation$ActivityResult android.app.Instrumentation.execStartActivity(android.content.Context,android.os.IBinder,android.os.IBinder,java.lang.String,android.content.Intent,int,android.os.Bundle,android.os.UserHandle)
+
+public android.app.Instrumentation$ActivityResult android.app.Instrumentation.execStartActivityAsCaller(android.content.Context,android.os.IBinder,android.os.IBinder,android.app.Activity,android.content.Intent,int,android.os.Bundle,boolean,int)
+
+public void android.app.Instrumentation.execStartActivityFromAppTask(android.content.Context,android.os.IBinder,android.app.IAppTask,android.content.Intent,android.os.Bundle)
+
+public void android.app.Instrumentation.finish(int,android.os.Bundle)
+public android.os.Bundle android.app.Instrumentation.getAllocCounts()
+public android.os.Bundle android.app.Instrumentation.getBinderCounts()
+public android.content.ComponentName android.app.Instrumentation.getComponentName()
+
+public android.content.Context android.app.Instrumentation.getContext()
+public java.lang.String android.app.Instrumentation.getProcessName()
+public android.content.Context android.app.Instrumentation.getTargetContext()
+public android.app.UiAutomation android.app.Instrumentation.getUiAutomation()
+public android.app.UiAutomation android.app.Instrumentation.getUiAutomation(int)
+public boolean android.app.Instrumentation.invokeContextMenuAction(android.app.Activity,int,int)
+public boolean android.app.Instrumentation.invokeMenuActionSync(android.app.Activity,int,int)
+public boolean android.app.Instrumentation.isProfiling()
+public android.app.Activity android.app.Instrumentation.newActivity(java.lang.Class<?>,android.content.Context,android.os.IBinder,android.app.Application,android.content.Intent,android.content.pm.ActivityInfo,java.lang.CharSequence,android.app.Activity,java.lang.String,java.lang.Object) throws java.lang.InstantiationException,java.lang.IllegalAccessException
+
+public android.app.Activity android.app.Instrumentation.newActivity(java.lang.ClassLoader,java.lang.String,android.content.Intent) throws java.lang.InstantiationException,java.lang.IllegalAccessException,java.lang.ClassNotFoundException
+
+public android.app.Application android.app.Instrumentation.newApplication(java.lang.ClassLoader,java.lang.String,android.content.Context) throws java.lang.InstantiationException,java.lang.IllegalAccessException,java.lang.ClassNotFoundException
+
+public void android.app.Instrumentation.onCreate(android.os.Bundle)
+public void android.app.Instrumentation.onDestroy()
+public boolean android.app.Instrumentation.onException(java.lang.Object,java.lang.Throwable)
+public void android.app.Instrumentation.onStart()
+
+public void android.app.Instrumentation.removeMonitor(android.app.Instrumentation$ActivityMonitor)
+public void android.app.Instrumentation.runOnMainSync(java.lang.Runnable)
+public void android.app.Instrumentation.sendCharacterSync(int)
+public void android.app.Instrumentation.sendKeyDownUpSync(int)
+public void android.app.Instrumentation.sendKeySync(android.view.KeyEvent)
+public void android.app.Instrumentation.sendPointerSync(android.view.MotionEvent)
+public void android.app.Instrumentation.sendStatus(int,android.os.Bundle)
+public void android.app.Instrumentation.sendStringSync(java.lang.String)
+public void android.app.Instrumentation.sendTrackballEventSync(android.view.MotionEvent)
+public void android.app.Instrumentation.setAutomaticPerformanceSnapshots()
+public void android.app.Instrumentation.setInTouchMode(boolean)
+public void android.app.Instrumentation.start()
+public android.app.Activity android.app.Instrumentation.startActivitySync(android.content.Intent)
+public android.app.Activity android.app.Instrumentation.startActivitySync(android.content.Intent,android.os.Bundle)
+public void android.app.Instrumentation.startAllocCounting()
+public void android.app.Instrumentation.startPerformanceSnapshot()
+public void android.app.Instrumentation.startProfiling()
+public void android.app.Instrumentation.stopAllocCounting()
+public void android.app.Instrumentation.stopProfiling()
+public void android.app.Instrumentation.waitForIdle(java.lang.Runnable)
+public void android.app.Instrumentation.waitForIdleSync()
+public android.app.Activity android.app.Instrumentation.waitForMonitor(android.app.Instrumentation$ActivityMonitor)
+public android.app.Activity android.app.Instrumentation.waitForMonitorWithTimeout(android.app.Instrumentation$ActivityMonitor,long)

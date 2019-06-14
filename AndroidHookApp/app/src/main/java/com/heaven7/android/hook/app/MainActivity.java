@@ -4,10 +4,14 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.heaven7.android.hook.utils.HookUtils;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.tv1);
         //tv.setText(stringFromJNI());
-        HookUtils.printMethods(Instrumentation.class);
+        //printMethods(Instrumentation.class);
     }
 
     /**
@@ -43,5 +47,22 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity4.class);
         intent.putExtra("MainActivity", "_1234_");
         startActivity(intent);
+    }
+
+    public static void printMethods(Class<?> clazz) {
+        Method[] methods = clazz.getDeclaredMethods();
+        StringBuilder sb = new StringBuilder();
+        for (Method m : methods) {
+            if (Modifier.isStatic(m.getModifiers())) {
+                continue;
+            }
+            if (Modifier.isPrivate(m.getModifiers())) {
+                continue;
+            }
+            sb.append(m.toGenericString()).append("\n");
+            System.out.println(m.toGenericString());
+        }
+        String str = sb.toString().replaceAll("\\$", ".");
+        Log.i("printMethods", "\r\n: " + str);
     }
 }

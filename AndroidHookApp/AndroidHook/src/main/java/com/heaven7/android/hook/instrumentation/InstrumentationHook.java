@@ -28,6 +28,9 @@ public final class InstrumentationHook {
         Object activityThread = ReflectUtils.getVirtualFieldValue(base, "mMainThread");
         Object instrumentation = ReflectUtils.getVirtualFieldValue(activityThread, "mInstrumentation");
         Instrumentation target = callback.createProxy(context, (Instrumentation) instrumentation);
+        if(target instanceof InstrumentationProxy){
+            ((InstrumentationProxy)target).setActivityThread(activityThread);
+        }
         ReflectUtils.setVirtualFieldValue("mInstrumentation",
                 target, activityThread);
         return target;

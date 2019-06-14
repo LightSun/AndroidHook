@@ -3,6 +3,7 @@ package com.heaven7.android.hook.instrumentation;
 import android.app.Activity;
 import android.app.Application;
 import android.app.Instrumentation;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -22,7 +23,16 @@ public interface IInstrumentation {
     Instrumentation.ActivityResult onStartActivity(Intent intent);
     Activity waitForActivityWithTimeout(long timeOut);
 
+    void removeMonitor(Instrumentation.ActivityMonitor monitor);
+    Activity waitForMonitorWithTimeout(Instrumentation.ActivityMonitor monitor, long timeOut);
+    Activity waitForMonitor(Instrumentation.ActivityMonitor monitor);
+    boolean checkMonitorHit(Instrumentation.ActivityMonitor monitor, int minHits);
+    Instrumentation.ActivityMonitor addMonitor(
+            String cls, Instrumentation.ActivityResult result, boolean block);
+    Instrumentation.ActivityMonitor addMonitor(IntentFilter filter, Instrumentation.ActivityResult result, boolean b);
+    void addMonitor(Instrumentation.ActivityMonitor monitor);
     void addResults(android.os.Bundle b);
+
     void callActivityOnCreate(Activity activity,android.os.Bundle b);
     void callActivityOnCreate(Activity activity,android.os.Bundle b, android.os.PersistableBundle pb);
     void callActivityOnDestroy(Activity activity);
@@ -44,6 +54,7 @@ public interface IInstrumentation {
     void callActivityOnStop(Activity activity);
     void callActivityOnUserLeaving(Activity activity);
     void callApplicationOnCreate(Application application);
+
     void endPerformanceSnapshot();
     void startPerformanceSnapshot();
 
@@ -59,6 +70,9 @@ public interface IInstrumentation {
     Instrumentation.ActivityResult execStartActivityAsCaller(Context context,IBinder b1 ,IBinder b2,
                                                              Activity activity,android.content.Intent intent,
                                                              int c1,android.os.Bundle bun,boolean b, int c2);
+    //IAppTask appTask
+    void execStartActivityFromAppTask(Context who, IBinder contextThread, Object appTask, Intent intent, Bundle options);
+
     Activity newActivity(Class<?> clazz, Context context,
                          IBinder token, Application application, Intent intent, ActivityInfo info,
                          CharSequence title, Activity parent, String id,
@@ -67,8 +81,7 @@ public interface IInstrumentation {
 
     Activity newActivity(ClassLoader cl, String className,
                          Intent intent);
-    //IAppTask appTask
-    void execStartActivityFromAppTask(Context who, IBinder contextThread, Object appTask, Intent intent, Bundle options);
+
 
     void sendTrackballEventSync(MotionEvent event);
     void sendPointerSync(MotionEvent event);
@@ -79,17 +92,13 @@ public interface IInstrumentation {
     boolean invokeContextMenuAction(Activity targetActivity, int id, int flag);
     boolean invokeMenuActionSync(Activity targetActivity,
                                  int id, int flag);
-    void removeMonitor(Instrumentation.ActivityMonitor monitor);
-    Activity waitForMonitorWithTimeout(Instrumentation.ActivityMonitor monitor, long timeOut);
-    Activity waitForMonitor(Instrumentation.ActivityMonitor monitor);
-    boolean checkMonitorHit(Instrumentation.ActivityMonitor monitor, int minHits);
-    Instrumentation.ActivityMonitor addMonitor(
-            String cls, Instrumentation.ActivityResult result, boolean block);
-    Instrumentation.ActivityMonitor addMonitor(IntentFilter filter, Instrumentation.ActivityResult result, boolean b);
-    void addMonitor(Instrumentation.ActivityMonitor monitor);
-    boolean match(Context who,
-                  Activity activity,
-                  Intent intent);
 
-
+    boolean match(Context who, Activity activity, Intent intent);
+    void finish(int code, Bundle b);
+    Bundle getAllocCounts();
+    Bundle getBinderCounts();
+    ComponentName getComponentName();
+    Context getContext();
+    String getProcessName();
+    Context getTargetContext();
 }
